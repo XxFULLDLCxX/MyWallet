@@ -3,7 +3,6 @@ import { db } from "../database/database.connection.js";
 export const validateAuth = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    console.log(authorization, "a lá a validação e o carai");
     const token = authorization?.replace("Bearer ", "");
     const session = await db.collection('session').findOne({ token });
 

@@ -2,7 +2,6 @@ import { db } from '../database/database.connection.js';
 import dayjs from 'dayjs';
 
 export const getTransactions = async (req, res) => {
-  console.log();
   try {
     const transactions = await db.collection('transactions').find().toArray();
     res.send(transactions);
