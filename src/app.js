@@ -11,5 +11,5 @@ app.use(express.json());
 app.use(router);
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Server is litening on port ${PORT}...`));
