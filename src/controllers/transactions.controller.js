@@ -4,28 +4,16 @@ import dayjs from 'dayjs';
 export const getTransactions = async (req, res) => {
   try {
     const transactions = await db.collection('transactions').find().toArray();
-    res.send(transactions);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+    const total = transactions.reduce((n, obj) => n + (obj.operation === 'output' ? -1 : 1) * obj.value, 0);
+    res.send([total, ...transactions.reverse()]);
+  } catch (err) { res.status(500).send(err.message); }
 };
 
 export const postTransactions = async (req, res) => {
   try {
-    const { valor, description, operation } = req.body;
-    const transactions = await db.collection('transactions').insertOne({ date: dayjs().format('DD/MM'), valor, description, operation });
+    const { description, value, operation } = req.body;
+    await db.collection('transactions').insertOne(
+      { date: dayjs().format('DD/MM'), description, value, operation });
     res.sendStatus(201);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+  } catch (err) { res.status(500).send(err.message); }
 };
-
-export const output = async (req, res) => {
-  try {
-    const transactions = await db.collection('transactions').find().toArray();
-    res.send(transactions);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-};
-
