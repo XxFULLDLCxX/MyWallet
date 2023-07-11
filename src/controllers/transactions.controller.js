@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { db } from '../database/database.connection.js';
 import dayjs from 'dayjs';
 
@@ -16,4 +17,14 @@ export const postTransactions = async (req, res) => {
       { date: dayjs().format('DD/MM'), description, value, operation });
     res.sendStatus(201);
   } catch (err) { res.status(500).send(err.message); }
+};
+
+export const deleteTransactions = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.collection('transactions').deleteOne({ _id: new ObjectId(id) });
+    res.sendStatus(204);
+
+  } catch (err) { res.status(500).send(err.message); }
+
 };
