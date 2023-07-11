@@ -13,7 +13,7 @@ export const signup = async (req, res) => {
 
     res.sendStatus(201);
   }
-  catch (err) { res.status(500).send(err.message); }
+  catch (err) { res.status(500).send(err); }
 };
 
 export const signin = async (req, res) => {
@@ -30,5 +30,5 @@ export const signin = async (req, res) => {
     await db.collection("session").insertOne({ token, userId: user._id });
     return res.send({ token, name: user.name });
   }
-  catch (err) { res.status(500).send(err.message); }
+  catch (err) { res.status(500).send(err); }
 };
