@@ -7,7 +7,9 @@ import { deleteTransactions, getTransactions, postTransactions, putTransactions 
 const transactions_router = Router();
 transactions_router.use(validateAuth);
 transactions_router.get("/transactions", getTransactions);
-transactions_router.post("/transactions", validateSchema(transaction_schema), postTransactions);
 transactions_router.delete("/transactions/:id", deleteTransactions);
+
+transactions_router.use(validateSchema(transaction_schema));
+transactions_router.post("/transactions", postTransactions);
 transactions_router.put("/transactions/:id", putTransactions);
 export default transactions_router;

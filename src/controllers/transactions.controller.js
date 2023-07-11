@@ -32,10 +32,9 @@ export const deleteTransactions = async (req, res) => {
 export const putTransactions = async (req, res) => {
   try {
     const { id } = req.params;
-    const { description } = req.body;
-    if (!description) return res.status(422).send("A Descrição é Necessária!");
+    const { description, value, operation } = req.body;
     const result = await db.collection('transactions').updateOne(
-      { _id: new ObjectId(id) }, { $set: { description } }
+      { _id: new ObjectId(id) }, { $set: { description, value, operation } }
     );
     if (result.matchedCount === 0) return res.status(404).send("Esse item não existe!");
     res.sendStatus(201);
