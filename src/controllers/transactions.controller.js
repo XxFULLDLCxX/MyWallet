@@ -34,7 +34,7 @@ export const putTransactions = async (req, res) => {
     const { id } = req.params;
     const { description, value, operation } = req.body;
     const result = await db.collection('transactions').updateOne(
-      { _id: new ObjectId(id) }, { $set: { description, value, operation } }
+      { _id: new ObjectId(id) }, { $set: { date: dayjs().format('DD/MM'), description, value, operation } }
     );
     if (result.matchedCount === 0) return res.status(404).send("Esse item não existe!");
     res.sendStatus(201);
