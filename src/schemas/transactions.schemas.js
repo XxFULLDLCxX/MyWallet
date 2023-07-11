@@ -5,4 +5,3 @@ export const transaction_schema = joi.object({
   value: joi.number().precision(2).greater(0).required(),
   operation: joi.string().valid('input', 'output').required()
 });
-

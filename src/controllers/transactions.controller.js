@@ -28,3 +28,18 @@ export const deleteTransactions = async (req, res) => {
   } catch (err) { res.status(500).send(err.message); }
 
 };
+
+export const putTransactions = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { description } = req.body;
+    if (!description) return res.status(422).send("A Descrição é Necessária!");
+    const result = await db.collection('transactions').updateOne(
+      { _id: new ObjectId(id) }, { $set: { description } }
+    );
+    if (result.matchedCount === 0) return res.status(404).send("Esse item não existe!");
+    res.sendStatus(201);
+
+  } catch (err) { res.status(500).send(err.message); }
+
+};
